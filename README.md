@@ -2,9 +2,29 @@
 
 Scripts for making a VM on Fedora 31 to run hass.io
 
+## Sources
+
+Here's various stuff I read online to get this orking, especially the first one:
+
+https://community.home-assistant.io/t/set-up-hass-io-on-top-of-a-virtual-machine/42497
+
+https://heiko-sieger.info/tuning-vm-disk-performance/
+
+https://wiki.libvirt.org/page/Networking#Creating_network_initscripts
+
+https://phoenixnap.com/kb/how-to-install-docker-on-ubuntu-18-04
+
+https://dustymabe.com/2012/09/11/share-a-folder-between-kvm-host-and-guest/
+
+http://rabexc.org/posts/p9-setup-in-libvirt
+
+## Requirements
+
 You need a bunch of KVM stuff for this to work; something like this:
 
         sudo dnf install @virtualization qemu-kvm virt-install virt-manager virt-viewer virt-builder libguestfs-tools
+
+## How To Use
 
 The scripts are specific to my setup; in particular they assume my domain of digitalkingdom.org and my local network of 192.168.123.0/24 and my username of rlpowell
 
