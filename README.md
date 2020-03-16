@@ -22,7 +22,11 @@ http://rabexc.org/posts/p9-setup-in-libvirt
 
 You need a bunch of KVM stuff for this to work; something like this:
 
-        sudo dnf install @virtualization qemu-kvm virt-install virt-manager virt-viewer virt-builder libguestfs-tools
+        sudo dnf install @virtualization qemu-kvm virt-install virt-manager virt-viewer virt-builder libguestfs-tools iputils
+
+You'll need to have bridge networking setup to use this the way I have it configured; if you just want to use NAT instead, remove all the network configuration / netplan stuff from hassio.run.sh and drop the --network option from build.sh and it'll *probably* just work; I just don't like NAT inside my network.
+
+If you want to do bridge networking (i.e. VM networking without NAT), you can find docs online; for example https://docs.fedoraproject.org/en-US/Fedora/13/html/Virtualization_Guide/sect-Virtualization-Network_Configuration-Bridged_networking_with_libvirt.html
 
 ## How To Use
 
