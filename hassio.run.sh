@@ -41,7 +41,7 @@ apt-get update && apt-get upgrade -y && apt-get autoremove -y
 sed -i '/tmp/s/-\s*$/60d/' /usr/lib/tmpfiles.d/tmp.conf
 
 # Basics, networking, etc
-apt-get install -y zsh vim openssh-server network-manager curl sudo msmtp msmtp-mta
+apt-get install -y zsh vim openssh-server network-manager curl sudo
 
 # User setup, so we can ssh in
 /bin/echo -e 'test123\ntest123' | adduser --gecos 'Robin Powell' rlpowell
@@ -53,22 +53,12 @@ echo 'ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAIEA2yFDfoKcwBxG830sz9MelsMLoGHd7Y2wBG7M6d
 echo '* libraries/restart-without-asking boolean true' | debconf-set-selections
 
 # Get mail working, for cron
-cat >/etc/msmtprc <<'EOF'
-defaults
-port 25
-logfile -
-auto_from on
-domain hassio.digitalkingdom.org
-maildomain hassio.digitalkingdom.org
-
-account dk
-host mail.digitalkingdom.org
-
-# Set a default account
-account default : dk
-EOF
-systemctl start msmtpd
-systemctl enable msmtpd
+DEBIAN_FRONTEND=noninteractive apt-get -y install nullmailer
+echo 'rlpowell@digitalkingdom.org' >/etc/nullmailer/adminaddr
+echo 'hassio.digitalkingdom.org' >/etc/nullmailer/defaultdomain
+echo 'mail.digitalkingdom.org' >/etc/nullmailer/remotes
+systemctl start nullmailer
+systemctl enable nullmailer
 
 # Get cron backups working
 mkdir -p /var/lib/influxdb/backups
